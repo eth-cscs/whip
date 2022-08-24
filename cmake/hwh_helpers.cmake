@@ -32,8 +32,8 @@ function(hwh_add_function var wrapper params wrapped)
   set(wrapped_call "${HWH_TYPE}${wrapped}(${wrapped_call_args})")
 
   string(CONCAT fun
-    "void ${wrapper_definition} noexcept {\n"
-    "    if (error_t e = ${wrapped_call}; e != success) { throw exception(e); }\n"
+    "inline void ${wrapper_definition} {\n"
+    "    check_error(${wrapped_call});\n"
     "}\n"
     )
   set(${var} "${${var}}\n${fun}" PARENT_SCOPE)
