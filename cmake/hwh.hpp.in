@@ -1,0 +1,38 @@
+// TODO: license and copyright
+//
+// clang-format off TODO
+
+namespace hwh {
+// TODO: generate
+inline constexpr std::size_t version_major = 0;
+inline constexpr std::size_t version_minor = 1;
+inline constexpr std::size_t version_patch = 0;
+inline constexpr const char *version_string = "0.1.0";
+
+@hwh_types_section@
+
+@hwh_constants_section@
+
+@hwh_errors_section@
+
+// Custom exception which wraps a CUDA/HIP error
+class exception : std::exception {
+public:
+  exception(error_t e) : e(e), msg(/*TODO*/ cudaGetErrorString(e)) {}
+  error_t get_error() const noexcept { return e; }
+  const char *what() const noexcept { return msg.c_str(); }
+
+private:
+  error_t e;
+  std::string msg;
+};
+
+// Check an error and throw an exception on failure.
+inline void check_error(error_t e) {
+  if (e != success) {
+    throw exception(e);
+  }
+}
+
+@hwh_functions_section@
+} // namespace hwh
