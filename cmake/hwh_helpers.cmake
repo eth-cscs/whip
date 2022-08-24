@@ -23,11 +23,12 @@ function(hwh_add_function var wrapper params wrapped)
 
   # Transform parameter list into somethig usable in the call to the wrapped
   # function: replace semicolons with commas and keep only the variable names
-  string(REGEX REPLACE ";[^;]+ ([^ ]+);" ";\\1;" wrapped_call_args "${params}")
-  string(REGEX REPLACE "^[^;]+ ([^ ]+);" "\\1;" wrapped_call_args "${wrapped_call_args}")
-  string(REGEX REPLACE ";[^;]+ ([^ ]+)$" ";\\1" wrapped_call_args "${wrapped_call_args}")
-  string(REGEX REPLACE "^[^;]+ ([^ ]+)$" "\\1" wrapped_call_args "${wrapped_call_args}")
-  string(REPLACE ";" ", " wrapped_call_args "${wrapped_call_args}")
+  set(wrapped_call_args)
+  foreach(param ${params})
+    string(REGEX REPLACE ".* ([^ ]+)[  ]*$" "\\1" param_name "${param}")
+    set(wrapped_call_args "${wrapped_call_args}, ${param_name}")
+  endforeach()
+  string(REGEX REPLACE "^, " "" wrapped_call_args "${wrapped_call_args}")
   set(wrapped_call "${HWH_TYPE}${wrapped}(${wrapped_call_args})")
 
   string(CONCAT fun
