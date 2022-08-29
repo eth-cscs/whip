@@ -2,6 +2,22 @@
 //
 // clang-format off TODO
 
+#if !(defined(HWH_CUDA) || defined(HWH_HIP))
+#error "HWH requires exactly one of HWH_CUDA and HWH_HIP to be defined. Neither is defined."
+#endif
+
+#if defined(HWH_CUDA) && defined(HWH_HIP)
+#error "HWH requires exactly one of HWH_CUDA and HWH_HIP to be defined. Both are defined."
+#endif
+
+#if defined(HWH_CUDA)
+#include <cuda_runtime.h>
+#endif
+
+#if defined(HWH_HIP)
+#include <hip/hip_runtime.h>
+#endif
+
 namespace hwh {
 // TODO: generate
 inline constexpr std::size_t version_major = 0;
@@ -18,7 +34,15 @@ inline constexpr const char *version_string = "0.1.0";
 // Custom exception which wraps a CUDA/HIP error
 class exception : std::exception {
 public:
-  exception(error_t e) : e(e), msg(/*TODO*/ cudaGetErrorString(e)) {}
+  exception(error_t e)
+      : e(e), msg(
+#if defined(HWH_CUDA)
+                  cudaGetErrorString(e)
+#elif defined(HWH_HIP)
+                  hipGetErrorString(e)
+#endif
+              ) {
+  }
   error_t get_error() const noexcept { return e; }
   const char *what() const noexcept { return msg.c_str(); }
 
