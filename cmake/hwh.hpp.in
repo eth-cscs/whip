@@ -2,6 +2,8 @@
 //
 // clang-format off TODO
 
+#pragma once
+
 #if !(defined(HWH_CUDA) || defined(HWH_HIP))
 #error "HWH requires exactly one of HWH_CUDA and HWH_HIP to be defined. Neither is defined."
 #endif
