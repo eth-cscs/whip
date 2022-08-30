@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.10) # TODO: What do we actually require?
 
-project(hwh CXX)
+project(hwh VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 
@@ -16,13 +16,14 @@ if(NOT HWH_TYPE IN_LIST hwh_valid_types)
   message(FATAL_ERROR "hwh requires HWH_TYPE to be set to one of \"${hwh_valid_types}\" (case sensitive). HWH_TYPE is currently set to \"${HWH_TYPE}\".")
 endif()
 
+include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 include(hwh_helpers)
 
 add_library(hwh INTERFACE)
-target_include_directories(hwh
-  INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR})
+target_include_directories(
+  hwh INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 target_compile_features(hwh INTERFACE cxx_std_17) # TODO: Not necessarily required anymore?
 target_compile_definitions(hwh INTERFACE "HWH_WITH_${HWH_TYPE}")
 
@@ -68,7 +69,7 @@ hwh_add_function(hwh_functions_section get_last_error "" GetLastError)
 hwh_add_function(hwh_functions_section get_stream_priority_range "int* least;int* greatest" DeviceGetStreamPriorityRange)
 hwh_add_function(hwh_functions_section launch_kernel "const void* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel)
 hwh_add_function(hwh_functions_section malloc "void** p;std::size_t size" Malloc) # TODO: std::size_t or size_t?
-hwh_add_function(hwh_functions_section malloc_host "void** p;std::size_t size" MallocHost HIP HostMalloc) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case
+hwh_add_function(hwh_functions_section malloc_host "void** p;std::size_t size" MallocHost HIP HostMalloc) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
 hwh_add_function(hwh_functions_section mem_get_info "std::size_t* free;std::size_t* total" MemGetInfo)
 hwh_add_function(hwh_functions_section memcpy "void* dst;const void* src;std::size_t size_bytes;memcpy_kind kind" Memcpy)
 hwh_add_function(hwh_functions_section memcpy_async "void* dst;const void* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync)
@@ -84,4 +85,17 @@ hwh_add_function(hwh_functions_section stream_get_flags "stream_t stream;unsigne
 hwh_add_function(hwh_functions_section stream_query "stream_t stream" StreamQuery)
 hwh_add_function(hwh_functions_section stream_synchronize "stream_t stream" StreamSynchronize)
 
+write_basic_package_version_file("${PROJECT_BINARY_DIR}/hwh-config-version.cmake" VERSION ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
 configure_file("${PROJECT_SOURCE_DIR}/cmake/hwh.hpp.in" "${PROJECT_BINARY_DIR}/include/hwh.hpp")
+
+install(TARGETS hwh EXPORT hwh)
+install(
+  EXPORT hwh
+  FILE hwh-targets.cmake
+  NAMESPACE hwh::
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/hwh")
+install(FILES "${PROJECT_BINARY_DIR}/include/hwh.hpp"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+install(FILES "${PROJECT_BINARY_DIR}/hwh-config-version.cmake"
+              "${PROJECT_SOURCE_DIR}/cmake/hwh-config.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/hwh")
