@@ -13,7 +13,13 @@ function(hwh_add_type var wrapper wrapped)
 endfunction()
 
 function(hwh_add_constant var wrapper wrapped)
-  set(constant "inline constexpr int ${wrapper} = ${hwh_wrapped_prefix}${wrapped};")
+  cmake_parse_arguments(hwh_add_constant "" "TYPE" "" ${ARGN})
+  set(type "int")
+  if(NOT "${hwh_add_constant_TYPE}" STREQUAL "")
+    set(type "${hwh_add_constant_TYPE}")
+  endif()
+
+  set(constant "inline constexpr ${type} ${wrapper} = ${hwh_wrapped_prefix}${wrapped};")
   set(${var} "${${var}}\n${constant}" PARENT_SCOPE)
 endfunction()
 
@@ -23,12 +29,11 @@ function(hwh_add_error var wrapper wrapped)
 endfunction()
 
 function(hwh_add_function var wrapper params wrapped)
-  set(one_value_args HIP_OVERRIDE CUDA_OVERRIDE)
   cmake_parse_arguments(hwh_add_function "" "CUDA_OVERRIDE HIP_OVERRIDE" "" ${ARGN})
 
-  if("${HWH_TYPE}" STREQUAL "CUDA" AND "${hwh_add_function_CUDA_OVERRIDE}")
+  if("${HWH_TYPE}" STREQUAL "CUDA" AND NOT "${hwh_add_function_CUDA_OVERRIDE}" STREQUAL "")
     set(wrapped "${hwh_add_function_CUDA_OVERRIDE}")
-  elseif("${HWH_TYPE}" STREQUAL "HIP" AND "${hwh_add_function_HIP_OVERRIDE}")
+  elseif("${HWH_TYPE}" STREQUAL "HIP" AND NOT "${hwh_add_function_HIP_OVERRIDE}" STREQUAL "")
     set(wrapped "${hwh_add_function_HIP_OVERRIDE}")
   endif()
 
@@ -47,10 +52,6 @@ function(hwh_add_function var wrapper params wrapped)
   string(REGEX REPLACE "^, " "" wrapped_call_args "${wrapped_call_args}")
   set(wrapped_call "${hwh_wrapped_prefix}${wrapped}(${wrapped_call_args})")
 
-  string(CONCAT fun
-    "inline void ${wrapper_definition} {\n"
-    "    check_error(${wrapped_call});\n"
-    "}\n"
-    )
+  set(fun "inline void ${wrapper_definition} { check_error(${wrapped_call}); }")
   set(${var} "${${var}}\n${fun}" PARENT_SCOPE)
 endfunction()
