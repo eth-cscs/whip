@@ -41,7 +41,7 @@ elseif(HWH_TYPE STREQUAL "HIP")
 endif()
 
 set(hwh_types_section "// Types")
-hwh_add_type(hwh_types_section device_prop DeviceProp)
+hwh_add_type(hwh_types_section device_prop DeviceProp_t CUDA_OVERRIDE DeviceProp)
 hwh_add_type(hwh_types_section error_t Error_t)
 hwh_add_type(hwh_types_section event_t Event_t)
 hwh_add_type(hwh_types_section stream_t Stream_t)
@@ -76,7 +76,7 @@ hwh_add_function(hwh_functions_section get_stream_priority_range "int* least;int
 hwh_add_function(hwh_functions_section launch_kernel "const auto* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel LAMBDA)
 hwh_add_function(hwh_functions_section malloc "auto** p;std::size_t size" Malloc LAMBDA) # TODO: std::size_t or size_t?
 hwh_add_function(hwh_functions_section malloc_async "auto** p;std::size_t size;stream_t stream" MallocAsync LAMBDA) # TODO: std::size_t or size_t?
-hwh_add_function(hwh_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP HostMalloc LAMBDA) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
+hwh_add_function(hwh_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc LAMBDA) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
 hwh_add_function(hwh_functions_section mem_get_info "std::size_t* free;std::size_t* total" MemGetInfo)
 hwh_add_function(hwh_functions_section memcpy "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind" Memcpy LAMBDA)
 hwh_add_function(hwh_functions_section memcpy_async "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync LAMBDA)

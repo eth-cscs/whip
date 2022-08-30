@@ -8,6 +8,14 @@ elseif("${HWH_TYPE}" STREQUAL "HIP")
 endif()
 
 function(hwh_add_type var wrapper wrapped)
+  cmake_parse_arguments(hwh_add_type "" "CUDA_OVERRIDE HIP_OVERRIDE" "" ${ARGN})
+
+  if("${HWH_TYPE}" STREQUAL "CUDA" AND NOT "${hwh_add_type_CUDA_OVERRIDE}" STREQUAL "")
+    set(wrapped "${hwh_add_type_CUDA_OVERRIDE}")
+  elseif("${HWH_TYPE}" STREQUAL "HIP" AND NOT "${hwh_add_type_HIP_OVERRIDE}" STREQUAL "")
+    set(wrapped "${hwh_add_type_HIP_OVERRIDE}")
+  endif()
+
   set(type "using ${wrapper} = ${hwh_wrapped_prefix}${wrapped};")
   set(${var} "${${var}}\n${type}" PARENT_SCOPE)
 endfunction()
