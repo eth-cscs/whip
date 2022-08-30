@@ -20,6 +20,8 @@
 #include <hip/hip_runtime.h>
 #endif
 
+#include <cstddef>
+
 namespace hwh {
 // TODO: generate
 inline constexpr std::size_t version_major = 0;
