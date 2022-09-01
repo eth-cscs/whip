@@ -21,6 +21,7 @@
 #endif
 
 #include <cstddef>
+#include <stdexcept>
 
 namespace hwh {
 // TODO: generate
@@ -45,15 +46,13 @@ inline const char* get_error_string(error_t error) {
 }
 
 // Custom exception which wraps a CUDA/HIP error
-class exception : std::exception {
+class exception final : public std::runtime_error {
 public:
-  exception(error_t error) : error(error), msg(get_error_string(error)) {}
+  explicit exception(error_t error) : std::runtime_error(get_error_string(error)), error(error) {}
   error_t get_error() const noexcept { return error; }
-  const char *what() const noexcept { return msg.c_str(); }
 
 private:
   error_t error;
-  std::string msg;
 };
 
 // Check an error and throw an exception on failure.
