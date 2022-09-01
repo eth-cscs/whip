@@ -67,21 +67,21 @@ hwh_add_function(hwh_functions_section event_create_with_flags "event_t* event;u
 hwh_add_function(hwh_functions_section event_destroy "event_t event" EventDestroy)
 hwh_add_function(hwh_functions_section event_query "event_t event" EventQuery NOEXCEPT)
 hwh_add_function(hwh_functions_section event_record "event_t event;stream_t stream" EventRecord)
-hwh_add_function(hwh_functions_section free "auto* p" Free LAMBDA)
-hwh_add_function(hwh_functions_section free_async "auto* p;stream_t stream" FreeAsync LAMBDA) # TODO: Version constraints?
+hwh_add_function(hwh_functions_section free "auto* p" Free)
+hwh_add_function(hwh_functions_section free_async "auto* p;stream_t stream" FreeAsync) # TODO: Version constraints?
 hwh_add_function(hwh_functions_section get_device "int* device" GetDevice)
 hwh_add_function(hwh_functions_section get_device_count "int* count" GetDeviceCount)
 hwh_add_function(hwh_functions_section get_device_properties "device_prop* prop;int device" GetDeviceProperties)
 hwh_add_function(hwh_functions_section get_stream_priority_range "int* least;int* greatest" DeviceGetStreamPriorityRange)
-hwh_add_function(hwh_functions_section launch_kernel "const auto* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel LAMBDA)
-hwh_add_function(hwh_functions_section malloc "auto** p;std::size_t size" Malloc LAMBDA) # TODO: std::size_t or size_t?
-hwh_add_function(hwh_functions_section malloc_async "auto** p;std::size_t size;stream_t stream" MallocAsync LAMBDA) # TODO: std::size_t or size_t?
-hwh_add_function(hwh_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc LAMBDA) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
+hwh_add_function(hwh_functions_section launch_kernel "const auto* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel)
+hwh_add_function(hwh_functions_section malloc "auto** p;std::size_t size" Malloc) # TODO: std::size_t or size_t?
+hwh_add_function(hwh_functions_section malloc_async "auto** p;std::size_t size;stream_t stream" MallocAsync) # TODO: std::size_t or size_t?
+hwh_add_function(hwh_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
 hwh_add_function(hwh_functions_section mem_get_info "std::size_t* free;std::size_t* total" MemGetInfo)
-hwh_add_function(hwh_functions_section memcpy "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind" Memcpy LAMBDA)
-hwh_add_function(hwh_functions_section memcpy_async "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync LAMBDA)
-hwh_add_function(hwh_functions_section memset "auto* dst;int value;std::size_t size_bytes" Memset LAMBDA)
-hwh_add_function(hwh_functions_section memset_async "auto* dst;int value;std::size_t size_bytes;stream_t stream" MemsetAsync LAMBDA)
+hwh_add_function(hwh_functions_section memcpy "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind" Memcpy)
+hwh_add_function(hwh_functions_section memcpy_async "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync)
+hwh_add_function(hwh_functions_section memset "auto* dst;int value;std::size_t size_bytes" Memset)
+hwh_add_function(hwh_functions_section memset_async "auto* dst;int value;std::size_t size_bytes;stream_t stream" MemsetAsync)
 hwh_add_function(hwh_functions_section set_device "int device" SetDevice)
 hwh_add_function(hwh_functions_section stream_add_callback "stream_t stream;stream_callback_t callback;void* user_data;unsigned int flags" StreamAddCallback)
 hwh_add_function(hwh_functions_section stream_create "stream_t* stream" StreamCreate)
