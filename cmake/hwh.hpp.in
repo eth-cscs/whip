@@ -24,11 +24,10 @@
 #include <stdexcept>
 
 namespace hwh {
-// TODO: generate
-inline constexpr std::size_t version_major = 0;
-inline constexpr std::size_t version_minor = 1;
-inline constexpr std::size_t version_patch = 0;
-inline constexpr const char *version_string = "0.1.0";
+inline constexpr std::size_t version_major = @PROJECT_VERSION_MAJOR@;
+inline constexpr std::size_t version_minor = @PROJECT_VERSION_MINOR@;
+inline constexpr std::size_t version_patch = @PROJECT_VERSION_PATCH@;
+inline constexpr const char *version_string = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@";
 
 @hwh_types_section@
 // TODO: dim3 in namespace hwh?
