@@ -60,6 +60,7 @@ hwh_add_error(hwh_errors_section success Success)
 hwh_add_error(hwh_errors_section error_not_ready ErrorNotReady)
 
 set(hwh_functions_section "// Functions")
+hwh_add_function(hwh_functions_section check_last_error "" GetLastError)
 hwh_add_function(hwh_functions_section device_synchronize "" DeviceSynchronize)
 hwh_add_function(hwh_functions_section event_create "event_t* event" EventCreate)
 hwh_add_function(hwh_functions_section event_create_with_flags "event_t* event;unsigned flags" EventCreateWithFlags)
@@ -71,7 +72,6 @@ hwh_add_function(hwh_functions_section free_async "auto* p;stream_t stream" Free
 hwh_add_function(hwh_functions_section get_device "int* device" GetDevice)
 hwh_add_function(hwh_functions_section get_device_count "int* count" GetDeviceCount)
 hwh_add_function(hwh_functions_section get_device_properties "device_prop* prop;int device" GetDeviceProperties)
-hwh_add_function(hwh_functions_section get_last_error "" GetLastError)
 hwh_add_function(hwh_functions_section get_stream_priority_range "int* least;int* greatest" DeviceGetStreamPriorityRange)
 hwh_add_function(hwh_functions_section launch_kernel "const auto* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel LAMBDA)
 hwh_add_function(hwh_functions_section malloc "auto** p;std::size_t size" Malloc LAMBDA) # TODO: std::size_t or size_t?
