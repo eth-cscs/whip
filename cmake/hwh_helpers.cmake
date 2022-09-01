@@ -32,7 +32,7 @@ function(hwh_add_constant var wrapper wrapped)
 endfunction()
 
 function(hwh_add_error var wrapper wrapped)
-  set(error "inline constexpr int ${wrapper} = ${hwh_wrapped_prefix}${wrapped};")
+  set(error "inline constexpr error_t ${wrapper} = ${hwh_wrapped_prefix}${wrapped};")
   set(${var} "${${var}}\n${error}" PARENT_SCOPE)
 endfunction()
 
