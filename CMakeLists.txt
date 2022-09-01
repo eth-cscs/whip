@@ -65,7 +65,7 @@ hwh_add_function(hwh_functions_section device_synchronize "" DeviceSynchronize)
 hwh_add_function(hwh_functions_section event_create "event_t* event" EventCreate)
 hwh_add_function(hwh_functions_section event_create_with_flags "event_t* event;unsigned flags" EventCreateWithFlags)
 hwh_add_function(hwh_functions_section event_destroy "event_t event" EventDestroy)
-hwh_add_function(hwh_functions_section event_query "event_t event" EventQuery)
+hwh_add_function(hwh_functions_section event_query "event_t event" EventQuery NOEXCEPT)
 hwh_add_function(hwh_functions_section event_record "event_t event;stream_t stream" EventRecord)
 hwh_add_function(hwh_functions_section free "auto* p" Free LAMBDA)
 hwh_add_function(hwh_functions_section free_async "auto* p;stream_t stream" FreeAsync LAMBDA) # TODO: Version constraints?
@@ -89,7 +89,7 @@ hwh_add_function(hwh_functions_section stream_create_with_flags "stream_t* strea
 hwh_add_function(hwh_functions_section stream_create_with_priority "stream_t* stream;unsigned int flags;int priority" StreamCreateWithPriority)
 hwh_add_function(hwh_functions_section stream_destroy "stream_t stream" StreamDestroy)
 hwh_add_function(hwh_functions_section stream_get_flags "stream_t stream;unsigned int* flags" StreamGetFlags)
-hwh_add_function(hwh_functions_section stream_query "stream_t stream" StreamQuery)
+hwh_add_function(hwh_functions_section stream_query "stream_t stream" StreamQuery NOEXCEPT)
 hwh_add_function(hwh_functions_section stream_synchronize "stream_t stream" StreamSynchronize)
 
 write_basic_package_version_file("${PROJECT_BINARY_DIR}/hwh-config-version.cmake" VERSION ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
