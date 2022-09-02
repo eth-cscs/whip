@@ -36,9 +36,9 @@ functionality is available in the `TODO` namespace.
 
 There are two main exceptions to the above rules:
 
-- The functions `TODO::event_query` and `TODO::stream_query` are expected to
-  fail under normal circumstances so they instead return a `TODO::error_t` to
-  allow the caller to check the status of the event or stream.
+- The functions `cuda/hipEventQuery` and `cuda/hipStreamQuery` are expected to
+  fail under normal circumstances. The wrappers in TODO instead return a bool
+  indicating readiness. The wrappers throw an exception in all other cases.
 - `cuda/hipGetLastError` is called `TODO::check_last_error` instead of
   `TODO::get_last_error` because it throws on failure as other wrappers do.
   
