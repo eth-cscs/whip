@@ -4,42 +4,42 @@
 
 #pragma once
 
-#if !(defined(HWH_CUDA) || defined(HWH_HIP))
-#error "HWH requires exactly one of HWH_CUDA and HWH_HIP to be defined. Neither is defined."
+#if !(defined(WHIP_CUDA) || defined(WHIP_HIP))
+#error "whip requires exactly one of WHIP_CUDA and WHIP_HIP to be defined. Neither is defined."
 #endif
 
-#if defined(HWH_CUDA) && defined(HWH_HIP)
-#error "HWH requires exactly one of HWH_CUDA and HWH_HIP to be defined. Both are defined."
+#if defined(WHIP_CUDA) && defined(WHIP_HIP)
+#error "whip requires exactly one of WHIP_CUDA and WHIP_HIP to be defined. Both are defined."
 #endif
 
-#if defined(HWH_CUDA)
+#if defined(WHIP_CUDA)
 #include <cuda_runtime.h>
 #endif
 
-#if defined(HWH_HIP)
+#if defined(WHIP_HIP)
 #include <hip/hip_runtime.h>
 #endif
 
 #include <cstddef>
 #include <stdexcept>
 
-namespace hwh {
+namespace whip {
 inline constexpr std::size_t version_major = @PROJECT_VERSION_MAJOR@;
 inline constexpr std::size_t version_minor = @PROJECT_VERSION_MINOR@;
 inline constexpr std::size_t version_patch = @PROJECT_VERSION_PATCH@;
 inline constexpr const char *version_string = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@";
 
-@hwh_types_section@
-// TODO: dim3 in namespace hwh?
+@whip_types_section@
+// TODO: dim3 in namespace whip?
 
-@hwh_constants_section@
+@whip_constants_section@
 
-@hwh_errors_section@
+@whip_errors_section@
 
 inline const char* get_error_string(error_t error) {
-#if defined(HWH_CUDA)
+#if defined(WHIP_CUDA)
     return cudaGetErrorString(error);
-#elif defined(HWH_HIP)
+#elif defined(WHIP_HIP)
     return hipGetErrorString(error);
 #endif
 }
@@ -76,5 +76,5 @@ inline bool check_error_query(error_t e) {
 }
 } // namespace impl
 
-@hwh_functions_section@
-} // namespace hwh
+@whip_functions_section@
+} // namespace whip
