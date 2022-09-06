@@ -77,9 +77,9 @@ whip_add_function(whip_functions_section get_device_count "int* count" GetDevice
 whip_add_function(whip_functions_section get_device_properties "device_prop* prop;int device" GetDeviceProperties)
 whip_add_function(whip_functions_section get_stream_priority_range "int* least;int* greatest" DeviceGetStreamPriorityRange)
 whip_add_function(whip_functions_section launch_kernel "const auto* f;dim3 num_blocks;dim3 dim_blocks;void** args;std::size_t shared_mem_bytes;stream_t stream" LaunchKernel)
-whip_add_function(whip_functions_section malloc "auto** p;std::size_t size" Malloc) # TODO: std::size_t or size_t?
-whip_add_function(whip_functions_section malloc_async "auto** p;std::size_t size;stream_t stream" MallocAsync) # TODO: std::size_t or size_t?
-whip_add_function(whip_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
+whip_add_function(whip_functions_section malloc "auto** p;std::size_t size" Malloc)
+whip_add_function(whip_functions_section malloc_async "auto** p;std::size_t size;stream_t stream" MallocAsync)
+whip_add_function(whip_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc)
 whip_add_function(whip_functions_section mem_get_info "std::size_t* free;std::size_t* total" MemGetInfo)
 whip_add_function(whip_functions_section memcpy "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind" Memcpy)
 whip_add_function(whip_functions_section memcpy_2d "auto* dst;std::size_t dpitch;const auto* src;std::size_t spitch;std::size_t width;std::size_t height;memcpy_kind kind" Memcpy2D)
