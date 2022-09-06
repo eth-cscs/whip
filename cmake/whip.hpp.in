@@ -57,7 +57,6 @@ private:
   error_t error;
 };
 
-namespace impl {
 // Check an error and throw an exception on failure.
 inline void check_error(error_t e) {
   if (e != success) {
@@ -65,6 +64,7 @@ inline void check_error(error_t e) {
   }
 }
 
+namespace impl {
 // Check an error and throw an exception on failure, except error_not_ready.
 // This is useful for query functions.
 inline bool check_error_query(error_t e) {
