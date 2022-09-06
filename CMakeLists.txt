@@ -50,9 +50,11 @@ whip_add_type(whip_types_section memcpy_kind MemcpyKind)
 
 set(whip_constants_section "// Constants")
 whip_add_constant(whip_constants_section event_disable_timing EventDisableTiming)
-whip_add_constant(whip_constants_section memcpy_device_to_device MemcpyDeviceToDevice TYPE memcpy_kind)
-whip_add_constant(whip_constants_section memcpy_device_to_host MemcpyDeviceToHost TYPE memcpy_kind)
+whip_add_constant(whip_constants_section memcpy_host_to_host MemcpyHostToHost TYPE memcpy_kind)
 whip_add_constant(whip_constants_section memcpy_host_to_device MemcpyHostToDevice TYPE memcpy_kind)
+whip_add_constant(whip_constants_section memcpy_device_to_host MemcpyDeviceToHost TYPE memcpy_kind)
+whip_add_constant(whip_constants_section memcpy_device_to_device MemcpyDeviceToDevice TYPE memcpy_kind)
+whip_add_constant(whip_constants_section memcpy_default MemcpyDefault TYPE memcpy_kind)
 whip_add_constant(whip_constants_section stream_non_blocking StreamNonBlocking)
 
 set(whip_errors_section "// Errors")
@@ -79,6 +81,8 @@ whip_add_function(whip_functions_section malloc_async "auto** p;std::size_t size
 whip_add_function(whip_functions_section malloc_host "auto** p;std::size_t size" MallocHost HIP_OVERRIDE HostMalloc) # TODO: flags? TODO: HIP also has hipMallocHost nowadays, no need for special case?
 whip_add_function(whip_functions_section mem_get_info "std::size_t* free;std::size_t* total" MemGetInfo)
 whip_add_function(whip_functions_section memcpy "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind" Memcpy)
+whip_add_function(whip_functions_section memcpy_2d "auto* dst;std::size_t dpitch;const auto* src;std::size_t spitch;std::size_t width;std::size_t height;memcpy_kind kind" Memcpy2D)
+whip_add_function(whip_functions_section memcpy_2d_async "auto* dst;std::size_t dpitch;const auto* src;std::size_t spitch;std::size_t width;std::size_t height;memcpy_kind kind;stream_t stream" Memcpy2DAsync)
 whip_add_function(whip_functions_section memcpy_async "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync)
 whip_add_function(whip_functions_section memset "auto* dst;int value;std::size_t size_bytes" Memset)
 whip_add_function(whip_functions_section memset_async "auto* dst;int value;std::size_t size_bytes;stream_t stream" MemsetAsync)
