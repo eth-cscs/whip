@@ -34,7 +34,6 @@ inline constexpr std::size_t version_patch = @PROJECT_VERSION_PATCH@;
 inline constexpr const char *version_string = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@";
 
 @whip_types_section@
-// TODO: dim3 in namespace whip?
 
 @whip_constants_section@
 
