@@ -29,7 +29,7 @@ add_library(whip INTERFACE)
 target_include_directories(
   whip INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-target_compile_features(whip INTERFACE cxx_std_17) # TODO: Not necessarily required anymore?
+target_compile_features(whip INTERFACE cxx_std_17)
 target_compile_definitions(whip INTERFACE "WHIP_${WHIP_TYPE}")
 
 if(WHIP_TYPE STREQUAL "CUDA")
