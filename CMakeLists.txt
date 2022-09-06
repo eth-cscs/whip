@@ -71,6 +71,7 @@ whip_add_function(whip_functions_section event_ready "event_t event" EventQuery 
 whip_add_function(whip_functions_section event_record "event_t event;stream_t stream" EventRecord)
 whip_add_function(whip_functions_section free "auto* p" Free)
 whip_add_function(whip_functions_section free_async "auto* p;stream_t stream" FreeAsync) # TODO: Version constraints?
+whip_add_function(whip_functions_section free_host "auto* p" FreeHost)
 whip_add_function(whip_functions_section get_device "int* device" GetDevice)
 whip_add_function(whip_functions_section get_device_count "int* count" GetDeviceCount)
 whip_add_function(whip_functions_section get_device_properties "device_prop* prop;int device" GetDeviceProperties)
@@ -85,6 +86,8 @@ whip_add_function(whip_functions_section memcpy_2d "auto* dst;std::size_t dpitch
 whip_add_function(whip_functions_section memcpy_2d_async "auto* dst;std::size_t dpitch;const auto* src;std::size_t spitch;std::size_t width;std::size_t height;memcpy_kind kind;stream_t stream" Memcpy2DAsync)
 whip_add_function(whip_functions_section memcpy_async "auto* dst;const auto* src;std::size_t size_bytes;memcpy_kind kind;stream_t stream" MemcpyAsync)
 whip_add_function(whip_functions_section memset "auto* dst;int value;std::size_t size_bytes" Memset)
+whip_add_function(whip_functions_section memset_2d "auto* dst;std::size_t pitch;int value;std::size_t width;std::size_t height" Memset2D)
+whip_add_function(whip_functions_section memset_2d_async "auto* dst;std::size_t pitch;int value;std::size_t width;std::size_t height;stream_t stream" Memset2DAsync)
 whip_add_function(whip_functions_section memset_async "auto* dst;int value;std::size_t size_bytes;stream_t stream" MemsetAsync)
 whip_add_function(whip_functions_section set_device "int device" SetDevice)
 whip_add_function(whip_functions_section stream_add_callback "stream_t stream;stream_callback_t callback;void* user_data;unsigned int flags" StreamAddCallback)
