@@ -6,7 +6,7 @@
 # Please, refer to the LICENSE file in the root directory.
 # SPDX-License-Identifier: BSD-3-Clause
 
-cmake_minimum_required(VERSION 3.10) # TODO: What do we actually require?
+cmake_minimum_required(VERSION 3.22)
 
 project(whip VERSION 0.1.0 LANGUAGES CXX)
 
