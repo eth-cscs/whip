@@ -77,7 +77,7 @@ whip_add_function(whip_functions_section event_destroy "event_t event" EventDest
 whip_add_function(whip_functions_section event_ready "event_t event" EventQuery QUERY)
 whip_add_function(whip_functions_section event_record "event_t event;stream_t stream" EventRecord)
 whip_add_function(whip_functions_section free "auto* p" Free)
-whip_add_function(whip_functions_section free_async "auto* p;stream_t stream" FreeAsync) # TODO: Version constraints?
+whip_add_function(whip_functions_section free_async "auto* p;stream_t stream" FreeAsync)
 whip_add_function(whip_functions_section free_host "auto* p" FreeHost)
 whip_add_function(whip_functions_section get_device "int* device" GetDevice)
 whip_add_function(whip_functions_section get_device_count "int* count" GetDeviceCount)
