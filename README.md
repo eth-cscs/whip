@@ -45,8 +45,8 @@ There are two main exceptions to the above rules:
 # Usage
 
 whip requires a C++17-capable compiler, CMake 3.22, and one of CUDA or HIP. The
-CMake variable `WHIP_TYPE` controls whether to target CUDA or HIP, and should be
-set to `CUDA` or `HIP`.  The default value is `CUDA`.
+CMake variable `WHIP_BACKEND` controls whether to target CUDA or HIP, and should
+be set to `CUDA` or `HIP`.  The default value is `CUDA`.
 
 whip can be included in CMake projects with `find_package(whip)` after which a
 CMake target `whip::whip` will be available.

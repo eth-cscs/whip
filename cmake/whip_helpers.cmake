@@ -8,9 +8,9 @@
 
 include(CMakeParseArguments)
 
-if("${WHIP_TYPE}" STREQUAL "CUDA")
+if("${WHIP_BACKEND}" STREQUAL "CUDA")
   set(whip_wrapped_prefix "cuda")
-elseif("${WHIP_TYPE}" STREQUAL "HIP")
+elseif("${WHIP_BACKEND}" STREQUAL "HIP")
   set(whip_wrapped_prefix "hip")
 endif()
 
@@ -18,9 +18,9 @@ function(whip_add_type var wrapper wrapped)
   cmake_parse_arguments(whip_add_type "" "CUDA_OVERRIDE;HIP_OVERRIDE" "" ${ARGN})
 
   set(prefixed_wrapped "${whip_wrapped_prefix}${wrapped}")
-  if("${WHIP_TYPE}" STREQUAL "CUDA" AND NOT "${whip_add_type_CUDA_OVERRIDE}" STREQUAL "")
+  if("${WHIP_BACKEND}" STREQUAL "CUDA" AND NOT "${whip_add_type_CUDA_OVERRIDE}" STREQUAL "")
     set(prefixed_wrapped "${whip_add_type_CUDA_OVERRIDE}")
-  elseif("${WHIP_TYPE}" STREQUAL "HIP" AND NOT "${whip_add_type_HIP_OVERRIDE}" STREQUAL "")
+  elseif("${WHIP_BACKEND}" STREQUAL "HIP" AND NOT "${whip_add_type_HIP_OVERRIDE}" STREQUAL "")
     set(prefixed_wrapped "${whip_add_type_HIP_OVERRIDE}")
   endif()
 
@@ -48,9 +48,9 @@ function(whip_add_function var wrapper params wrapped)
   cmake_parse_arguments(whip_add_function "QUERY" "CUDA_OVERRIDE;HIP_OVERRIDE" "" ${ARGN})
 
   set(prefixed_wrapped "${whip_wrapped_prefix}${wrapped}")
-  if("${WHIP_TYPE}" STREQUAL "CUDA" AND NOT "${whip_add_function_CUDA_OVERRIDE}" STREQUAL "")
+  if("${WHIP_BACKEND}" STREQUAL "CUDA" AND NOT "${whip_add_function_CUDA_OVERRIDE}" STREQUAL "")
     set(prefixed_wrapped "${whip_add_type_CUDA_OVERRIDE}")
-  elseif("${WHIP_TYPE}" STREQUAL "HIP" AND NOT "${whip_add_function_HIP_OVERRIDE}" STREQUAL "")
+  elseif("${WHIP_BACKEND}" STREQUAL "HIP" AND NOT "${whip_add_function_HIP_OVERRIDE}" STREQUAL "")
     set(prefixed_wrapped "${whip_add_type_HIP_OVERRIDE}")
   endif()
 
