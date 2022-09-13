@@ -49,9 +49,9 @@ function(whip_add_function var wrapper params wrapped)
 
   set(prefixed_wrapped "${whip_wrapped_prefix}${wrapped}")
   if("${WHIP_BACKEND}" STREQUAL "CUDA" AND NOT "${whip_add_function_CUDA_OVERRIDE}" STREQUAL "")
-    set(prefixed_wrapped "${whip_add_type_CUDA_OVERRIDE}")
+    set(prefixed_wrapped "${whip_add_function_CUDA_OVERRIDE}")
   elseif("${WHIP_BACKEND}" STREQUAL "HIP" AND NOT "${whip_add_function_HIP_OVERRIDE}" STREQUAL "")
-    set(prefixed_wrapped "${whip_add_type_HIP_OVERRIDE}")
+    set(prefixed_wrapped "${whip_add_function_HIP_OVERRIDE}")
   endif()
 
   # Transform parameter list into something usable in the actual parameter list:
