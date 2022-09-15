@@ -37,8 +37,10 @@ functionality is available in the `whip` namespace.
 There are two main exceptions to the above rules:
 
 - The functions `cuda/hipEventQuery` and `cuda/hipStreamQuery` are expected to
-  fail under normal circumstances. The wrappers in whip instead return a bool
-  indicating readiness. The wrappers throw an exception in all other cases.
+  fail under normal circumstances. The wrappers in whip (respectively
+  `whip::event_ready` and `whip::stream_ready`) return instead a bool indicating
+  readiness.
+  The wrappers throw an exception in all other cases.
 - `cuda/hipGetLastError` is called `whip::check_last_error` instead of
   `whip::get_last_error` because it throws on failure as other wrappers do.
   
