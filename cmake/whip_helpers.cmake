@@ -59,7 +59,7 @@ function(whip_add_function var wrapper params wrapped)
   string(REPLACE ";" ", " wrapper_definition_params "${params}")
   set(wrapper_definition "${wrapper}(${wrapper_definition_params})")
 
-  # Transform parameter list into somethig usable in the call to the wrapped
+  # Transform parameter list into something usable in the call to the wrapped
   # function: replace semicolons with commas and keep only the variable names
   set(wrapped_call_args)
   foreach(param ${params})
