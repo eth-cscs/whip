@@ -12,9 +12,10 @@ project(whip VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 
-set(WHIP_BACKEND "CUDA" CACHE STRING "${description}")
+set(whip_backend_description "Backend to use (CUDA or HIP)")
+set(WHIP_BACKEND "CUDA" CACHE STRING "${whip_backend_description}")
 set_property(CACHE WHIP_BACKEND PROPERTY TYPE STRING)
-set_property(CACHE WHIP_BACKEND PROPERTY HELPSTRING "The backend to use...")
+set_property(CACHE WHIP_BACKEND PROPERTY HELPSTRING "${whip_backend_description}")
 set(whip_valid_backends CUDA HIP)
 set_property(CACHE WHIP_BACKEND PROPERTY STRINGS "${whip_valid_backends}")
 
