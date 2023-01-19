@@ -6,15 +6,17 @@
 # Please, refer to the LICENSE file in the root directory.
 # SPDX-License-Identifier: BSD-3-Clause
 
+# General project setup
 cmake_minimum_required(VERSION 3.22)
 
 project(whip VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 
-set(WHIP_BACKEND "CUDA" CACHE STRING "${description}")
+set(whip_backend_description "Backend to use (CUDA or HIP)")
+set(WHIP_BACKEND "CUDA" CACHE STRING "${whip_backend_description}")
 set_property(CACHE WHIP_BACKEND PROPERTY TYPE STRING)
-set_property(CACHE WHIP_BACKEND PROPERTY HELPSTRING "The backend to use...")
+set_property(CACHE WHIP_BACKEND PROPERTY HELPSTRING "${whip_backend_description}")
 set(whip_valid_backends CUDA HIP)
 set_property(CACHE WHIP_BACKEND PROPERTY STRINGS "${whip_valid_backends}")
 
@@ -46,6 +48,7 @@ elseif(WHIP_BACKEND STREQUAL "HIP")
   target_link_libraries(whip INTERFACE hip::host)
 endif()
 
+# Generate whip header
 set(whip_types_section "// Types")
 whip_add_type(whip_types_section device_prop DeviceProp_t CUDA_OVERRIDE cudaDeviceProp)
 whip_add_type(whip_types_section dim3 dim3 CUDA_OVERRIDE dim3 HIP_OVERRIDE dim3)
@@ -106,6 +109,7 @@ whip_add_function(whip_functions_section stream_get_flags "stream_t stream;unsig
 whip_add_function(whip_functions_section stream_ready "stream_t stream" StreamQuery QUERY)
 whip_add_function(whip_functions_section stream_synchronize "stream_t stream" StreamSynchronize)
 
+# Install whip
 write_basic_package_version_file("${PROJECT_BINARY_DIR}/whip-config-version.cmake" VERSION ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
 configure_file("${PROJECT_SOURCE_DIR}/cmake/whip.hpp.in" "${PROJECT_BINARY_DIR}/include/whip.hpp")
 

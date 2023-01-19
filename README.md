@@ -24,25 +24,25 @@ that:
 whip lightly wraps CUDA and HIP functions. Function wrappers:
 
 - Are C++ lambdas to easily allow passing templated functions (like
-  `cuda/hipMemcpy`) into higher order functions.
+  `cudaMemcpy/hipMemcpy`) into higher order functions.
 - Check the return codes from wrapped functions and throw a `whip::exception` on
   failure.
 
 Wrapped types, errors, and functions have the same names as in CUDA and HIP,
 with the `cuda/hip` prefix removed and the name changed to `snake_case`. For
-example `cuda/hipMemcpy` is wrapped by a `whip::error_t whip::memcpy(auto* dst,
-const auto*, std::size_t size_bytes, whip::memcpy_kind)` function. All
+example `cudaMemcpy/hipMemcpy` is wrapped by a `whip::error_t whip::memcpy(auto*
+dst, const auto*, std::size_t size_bytes, whip::memcpy_kind)` function. All
 functionality is available in the `whip` namespace.
 
 There are two main exceptions to the above rules:
 
-- The functions `cuda/hipEventQuery` and `cuda/hipStreamQuery` are expected to
-  fail under normal circumstances. The wrappers in whip (respectively
-  `whip::event_ready` and `whip::stream_ready`) return instead a bool indicating
-  readiness.
-  The wrappers throw an exception in all other cases.
-- `cuda/hipGetLastError` is called `whip::check_last_error` instead of
-  `whip::get_last_error` because it throws on failure as other wrappers do.
+- The functions `cudaEventQuery/hipEventQuery` and
+  `cudaStreamQuery/hipStreamQuery` are expected to fail under normal
+  circumstances. The wrappers in whip (respectively `whip::event_ready` and
+  `whip::stream_ready`) return instead a bool indicating readiness.  The
+  wrappers throw an exception in all other cases.
+- `cudaGetLastError/hipGetLastError` is called `whip::check_last_error` instead
+  of `whip::get_last_error` because it throws on failure as other wrappers do.
   
 # Usage
 
