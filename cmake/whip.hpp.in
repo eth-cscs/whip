@@ -56,6 +56,11 @@ inline const char *get_error_name(error_t error) {
 }
 
 namespace impl {
+inline std::string make_error_string(error_t error, char const *function) {
+  return "[whip] " + function + " returned " + get_error_name(error) + " (" + get_error_string(error) +
+         ")";
+}
+
 inline std::string make_error_string(error_t error) {
   return "[whip] " #WHIP_BACKEND + " function call returned " + get_error_name(error) + " (" +
          get_error_string(error) + ")";
@@ -66,6 +71,8 @@ inline std::string make_error_string(error_t error) {
 class exception final : public std::runtime_error {
 public:
   explicit exception(error_t error) : std::runtime_error(make_error_string(error)), error(error) {}
+  explicit exception(error_t error, char const *function)
+      : std::runtime_error(make_error_string(error, function)), error(error) {}
   error_t get_error() const noexcept { return error; }
 
 private:
