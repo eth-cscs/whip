@@ -47,6 +47,14 @@ inline const char* get_error_string(error_t error) {
 #endif
 }
 
+inline const char *get_error_name(error_t error) {
+#if defined(WHIP_CUDA)
+  return cudaGetErrorName(error);
+#elif defined(WHIP_HIP)
+  return hipGetErrorName(error);
+#endif
+}
+
 // Custom exception which wraps a CUDA/HIP error
 class exception final : public std::runtime_error {
 public:
