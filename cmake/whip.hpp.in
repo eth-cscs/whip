@@ -24,8 +24,12 @@
 #include <hip/hip_runtime.h>
 #endif
 
+#define WHIP_STRINGIFY(x) WHIP_STRINGIFY_IMPL(x)
+#define WHIP_STRINGIFY_IMPL(x) #x
+
 #include <cstddef>
 #include <stdexcept>
+#include <string>
 
 namespace whip {
 inline constexpr std::size_t version_major = @PROJECT_VERSION_MAJOR@;
@@ -57,12 +61,12 @@ inline const char *get_error_name(error_t error) {
 
 namespace impl {
 inline std::string make_error_string(error_t error, char const *function) {
-  return "[whip] " + function + " returned " + get_error_name(error) + " (" + get_error_string(error) +
+  return std::string("[whip] ") + function + " returned " + get_error_name(error) + " (" + get_error_string(error) +
          ")";
 }
 
 inline std::string make_error_string(error_t error) {
-  return "[whip] " #WHIP_BACKEND + " function call returned " + get_error_name(error) + " (" +
+  return std::string("[whip] ") + WHIP_STRINGIFY(WHIP_BACKEND) " function call returned " + get_error_name(error) + " (" +
          get_error_string(error) + ")";
 }
 } // namespace impl
@@ -70,9 +74,9 @@ inline std::string make_error_string(error_t error) {
 // Custom exception which wraps a CUDA/HIP error
 class exception final : public std::runtime_error {
 public:
-  explicit exception(error_t error) : std::runtime_error(make_error_string(error)), error(error) {}
+  explicit exception(error_t error) : std::runtime_error(impl::make_error_string(error)), error(error) {}
   explicit exception(error_t error, char const *function)
-      : std::runtime_error(make_error_string(error, function)), error(error) {}
+      : std::runtime_error(impl::make_error_string(error, function)), error(error) {}
   error_t get_error() const noexcept { return error; }
 
 private:
@@ -87,16 +91,22 @@ inline void check_error(error_t e) {
 }
 
 namespace impl {
+inline void check_error(error_t e, char const *function) {
+  if (e != success) {
+    throw exception(e, function);
+  }
+}
+
 // Check an error and throw an exception on failure, except error_not_ready.
 // This is useful for query functions.
-inline bool check_error_query(error_t e) {
+inline bool check_error_query(error_t e, char const *function) {
   switch (e) {
-    case success:
-      return true;
-    case error_not_ready:
-      return false;
-    default:
-      throw exception(e);
+  case success:
+    return true;
+  case error_not_ready:
+    return false;
+  default:
+    throw exception(e, function);
   }
 }
 } // namespace impl

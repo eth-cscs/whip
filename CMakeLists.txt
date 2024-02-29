@@ -39,6 +39,7 @@ target_include_directories(
                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 target_compile_features(whip INTERFACE cxx_std_17)
 target_compile_definitions(whip INTERFACE "WHIP_${WHIP_BACKEND}")
+target_compile_definitions(whip INTERFACE "WHIP_BACKEND=${WHIP_BACKEND}")
 
 if(WHIP_BACKEND STREQUAL "CUDA")
   find_package(CUDAToolkit REQUIRED)
