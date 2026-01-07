@@ -34,6 +34,7 @@ include(GNUInstallDirs)
 include(whip_helpers)
 
 add_library(whip INTERFACE)
+add_library(whip::whip ALIAS whip)
 target_include_directories(
   whip INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
